@@ -1,0 +1,91 @@
+import doctest
+
+class Book:
+    """ Базовый класс книги. """
+    def __init__(self, name: str, author: str):
+        """ Инициализация экземпляра класса
+        :param name : название книги
+        :param author : автор книги
+        Пример:
+        >>> my_book = Book("Гоголь", "На дне")
+        """
+        if not isinstance(name, str):
+            raise TypeError ("Имя книги должно быть строкового типа")
+        self._name = name
+        if not isinstance(author, str):
+            raise TypeError ("Имя автора должно быть строкового типа")
+        self._author = author
+
+    @property
+    def name(self) -> str:
+        """Геттер для защиты от несакцианированного измения имени книги"""
+        return self._name
+
+    @property
+    def author(self) -> str:
+        """Геттер для защиты от несакцианированного измения имени автора"""
+        return self._author
+
+    def __str__(self):
+        return f"Книга {self._name}. Автор {self._author}"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r})"
+
+
+class PaperBook(Book):
+    """ Дочерний класс от класса Book, описывает модель бумажной книги """
+    def __init__(self, name: str, author: str, pages: int):
+        """ Инициализация экземпляра класса
+        :param name : название книги
+        :param author : автор книги
+        :param pages : количество страниц в книге
+        Пример:
+        >>> my_book = Book("Гоголь", "На дне", 150)
+        """
+        super().__init__(name, author)
+        # наследование параметров name и author из базового класса
+        if not isinstance(pages, int):
+            raise TypeError ("Количество страниц должно быть типа int")
+        elif pages < 0:
+            raise ValueError ("Значения количества страниц должно быть положительным")
+        self.pages = pages
+
+    def __str__(self):
+        return f"Книга {self._name}. Автор {self._author}. Количество страниц {self.pages}"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r}, pages={self.pages})"
+
+
+class AudioBook(Book):
+    """ Дочерний класс от класса Book, описывает модель электронной книги """
+    def __init__(self, name: str, author: str, duration: float):
+        """ Инициализация экземпляра класса
+                :param name : название книги
+                :param author : автор книги
+                :param duration : количество страниц в книге
+                Пример:
+                >>> my_book = Book("Гоголь", "На дне", 23.34)
+                """
+        super().__init__(name, author)
+        if not isinstance(duration, float):
+            raise TypeError ("Длительность книги должна быть типа float")
+        elif duration < 0:
+            raise ValueError ("Значение длительности книги должно быть положительным")
+        self.duration = duration
+
+    def __str__(self):
+        return f"Книга {self._name}. Автор {self._author}. Длительность {self.duration}"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r}, duration={self.duration})"
+
+book1 = PaperBook("Crime and Punishment", "Dostoevsky", 500)
+book2 = AudioBook("War and Peace", "Tolstoy", 234.34)
+print(book1.__str__())
+print(book2)
+
+if __name__ == "__main__":
+    doctest.testmod()  # тестирование примеров, которые находятся в документации
+
