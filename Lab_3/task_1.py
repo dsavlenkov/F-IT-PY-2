@@ -9,8 +9,8 @@ class Book:
         Пример:
         >>> my_book = Book("Гоголь", "На дне")
         """
-        #if not isinstance(name, str):
-        #    raise TypeError ("Имя книги должно быть строкового типа")
+        if not isinstance(name, str):
+            raise TypeError ("Имя книги должно быть строкового типа")
         self._name = name
         if not isinstance(author, str):
             raise TypeError ("Имя автора должно быть строкового типа")
